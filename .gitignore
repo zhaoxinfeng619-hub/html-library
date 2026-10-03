@@ -1,0 +1,13 @@
+# Local library data and credentials
+.data/
+.env
+.env.*
+# Runtime and editor files
+__pycache__/
+*.py[cod]
+*.log
+.DS_Store
+.vscode/
+.idea/
+# Generated QA reports
+tests/integration-results.json

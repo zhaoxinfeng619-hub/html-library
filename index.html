@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="自动收录本机 HTML，快速找到每一次创作。">
+  <title>页集 · HTML 资料库</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23de5534'/%3E%3Cpath d='M10 8h12v17H10zM7 11v13' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#search">跳到搜索</a>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="页集首页"><span class="brand-icon" data-icon="library"></span><span>页集 <small>HTML LIBRARY</small></span></a>
+    <div class="nav-label">我的资料库</div>
+    <nav aria-label="资料库导航">
+      <button class="nav-item active" data-view="all"><span data-icon="grid"></span>所有网页 <b id="count-all">—</b></button>
+      <button class="nav-item" data-view="favorites"><span data-icon="star"></span>我的收藏 <b id="count-favorites">—</b></button>
+      <button class="nav-item" data-view="recent"><span data-icon="clock"></span>最近打开 <b id="count-recent">—</b></button>
+    </nav>
+    <div class="nav-label sources-label">收录文件夹 <button class="icon-btn" id="add-root-small" aria-label="添加收录文件夹"><span data-icon="plus"></span></button></div>
+    <div id="root-nav" class="root-nav"></div>
+    <button class="manage-btn" id="manage-roots"><span data-icon="settings"></span>管理收录范围</button>
+    <div class="sidebar-bottom"><div class="local-label"><span data-icon="shield"></span>保存在这台 Mac 上</div><p>原文件保持原位，随时找回。</p></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span class="breadcrumb">我的空间 <span>/</span> HTML 资料库</span><span class="auto-state"><i id="status-dot"></i><span id="status-label">正在连接</span></span></header>
+    <main>
+      <div class="page-heading"><div><div class="eyebrow">YOUR PERSONAL WEB COLLECTION</div><h1><span id="page-title">所有网页</span><span class="total-pill" id="result-count">—</span></h1><p id="page-description">让每一次创作，都有迹可循。</p></div><button class="button primary" id="add-root"><span data-icon="folder-plus"></span>添加文件夹</button></div>
+      <div class="search-wrap"><span data-icon="search"></span><label class="sr-only" for="search">搜索标题、文件名或正文</label><input id="search" type="search" placeholder="搜索标题、文件名，或你记得的一句话…" autocomplete="off"><kbd>⌘ K</kbd></div>
+      <div class="filter-bar"><div id="category-filters" class="category-filters" aria-label="按类型筛选"></div><div class="display-controls"><label class="sr-only" for="sort">排序方式</label><select id="sort"><option value="modified">最近更新</option><option value="title">名称排序</option><option value="opened">最近打开</option></select><div class="view-switch"><button class="icon-btn selected" id="grid-view" aria-label="卡片视图" aria-pressed="true"><span data-icon="grid"></span></button><button class="icon-btn" id="list-view" aria-label="列表视图" aria-pressed="false"><span data-icon="list"></span></button></div></div></div>
+      <div class="collection-meta"><span id="collection-label">正在读取资料库…</span><button id="scan-now" class="text-btn"><span data-icon="refresh"></span>立即收录</button></div>
+      <div id="connection-error" class="error-banner" hidden>本地服务暂时未连接。请双击「开始使用.command」，页面会自动重连。</div>
+      <section id="collection" class="collection" aria-label="HTML 网页"></section>
+      <div class="load-more-wrap"><button id="load-more" class="button secondary" hidden>显示更多</button></div>
+      <footer><span id="last-scan">每 10 秒自动检查新增与更新</span><span>把此页加入书签，下次一键回来 <kbd>⌘ D</kbd></span></footer>
+    </main>
+  </div>
+  <dialog id="roots-dialog" class="modal roots-modal" aria-labelledby="roots-title"><div class="modal-head"><div><span class="eyebrow">AUTO COLLECTION</span><h2 id="roots-title">收录文件夹</h2></div><button class="icon-btn" data-close="roots-dialog" aria-label="关闭文件夹设置"><span data-icon="close"></span></button></div><p class="modal-intro">这里的 HTML 会自动加入资料库。添加一次，以后无需逐个导入。</p><div id="roots-list"></div><div class="folder-picker-row"><button class="button primary" id="choose-root" type="button"><span data-icon="folder-plus"></span>选择文件夹…</button><span>从 Mac 的文件夹窗口选择，无需填写路径。</span></div><p id="root-error" class="field-error" role="alert"></p><div class="notice"><span data-icon="info"></span><span>自动跳过临时 work 目录、依赖包、模板和隐藏目录。需要收录 work 内的成品时，可单独添加其所在文件夹。移除收录范围不会删除原文件。</span></div></dialog>
+  <dialog id="detail-dialog" class="modal detail-modal" aria-labelledby="detail-title"><div class="modal-head"><span class="eyebrow">PAGE DETAILS</span><button class="icon-btn" data-close="detail-dialog" aria-label="关闭页面详情"><span data-icon="close"></span></button></div><div id="detail-body"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
